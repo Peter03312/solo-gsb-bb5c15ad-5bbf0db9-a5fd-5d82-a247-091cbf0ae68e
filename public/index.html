@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>布料裁片排样系统</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header>
+    <h1>布料裁片排样系统</h1>
+    <div class="job-bar">
+      <label>方案：</label>
+      <select id="jobSelect"><option value="">（请选择）</option></select>
+      <button id="btnDeleteJob" class="danger">删除方案</button>
+    </div>
+  </header>
+
+  <div id="main">
+    <aside id="sidebar">
+      <section class="panel">
+        <h2>新建排样方案</h2>
+        <div class="row">
+          <label>名称</label>
+          <input id="fName" type="text" placeholder="例如：秋季夹克 M 码">
+        </div>
+        <div class="row">
+          <label>布幅宽度 (mm)</label>
+          <input id="fWidth" type="number" min="1" step="1" value="1600">
+        </div>
+        <div class="row">
+          <label>可用长度 (mm)</label>
+          <input id="fLength" type="number" min="1" step="1" value="5000">
+        </div>
+
+        <h3>瑕疵区（矩形，整数 mm）<button id="btnAddDefect" class="mini">＋添加</button></h3>
+        <div id="defectList"></div>
+
+        <h3>裁片型号 <button id="btnAddPiece" class="mini">＋添加</button></h3>
+        <div id="pieceList"></div>
+
+        <div class="row btns">
+          <button id="btnSample">填入示例</button>
+          <button id="btnCreate" class="primary">创建方案</button>
+        </div>
+      </section>
+
+      <section class="panel" id="selPanel" style="display:none">
+        <h2>选中裁片</h2>
+        <div id="selInfo"></div>
+        <div class="row">
+          <label>x (mm)</label><input id="selX" type="number" step="1">
+        </div>
+        <div class="row">
+          <label>y (mm)</label><input id="selY" type="number" step="1">
+        </div>
+        <div class="row">
+          <label>方向</label>
+          <select id="selRot">
+            <option value="0">0°（原方向）</option>
+            <option value="180">180°</option>
+          </select>
+        </div>
+        <div class="row">
+          <label><input id="selLocked" type="checkbox"> 锁定（优化时固定）</label>
+        </div>
+        <div class="row btns">
+          <button id="btnApplyMove" class="primary">应用位置</button>
+          <button id="btnUnplace">移回未排区</button>
+        </div>
+        <p class="hint">提示：也可直接在画布上拖动裁片（锁定件需先解锁）。</p>
+      </section>
+    </aside>
+
+    <section id="workspace">
+      <div id="toolbar">
+        <button id="btnOptimize" class="primary" disabled>优化排样（未锁定部分）</button>
+        <span id="statusBadge" class="badge">未加载方案</span>
+        <span id="usedLen"></span>
+        <span class="spacer"></span>
+        <button id="btnZoomOut">－</button>
+        <button id="btnZoomIn">＋</button>
+      </div>
+      <div id="msg"></div>
+      <div id="unplacedPanel"></div>
+      <div id="canvasWrap"><canvas id="cv"></canvas></div>
+    </section>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
