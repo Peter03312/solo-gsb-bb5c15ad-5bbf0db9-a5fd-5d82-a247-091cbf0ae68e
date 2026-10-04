@@ -1,0 +1,14 @@
+{
+  "name": "fabric-marker-studio",
+  "version": "1.0.0",
+  "description": "布料裁片排样 Web 应用（矩形布料、瑕疵区、简单多边形裁片）",
+  "main": "server/server.js",
+  "scripts": {
+    "start": "node server/server.js",
+    "test": "node tests/geometry.test.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.8.1",
+    "express": "^4.21.2"
+  }
+}

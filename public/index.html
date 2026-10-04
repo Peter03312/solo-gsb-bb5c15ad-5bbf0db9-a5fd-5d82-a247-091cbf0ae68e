@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>布料裁片排样 · Fabric Marker Studio</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+  <h1>布料裁片排样</h1>
+  <div id="status-bar">
+    <span id="status-text">加载中…</span>
+    <span id="status-length"></span>
+  </div>
+</header>
+
+<main>
+  <!-- 左侧控制面板 -->
+  <aside id="panel">
+    <section>
+      <h2>布料参数</h2>
+      <div class="grid2">
+        <label>布幅宽度 (mm)
+          <input type="number" id="cfg-width" min="1" step="1">
+        </label>
+        <label>可用长度 (mm)
+          <input type="number" id="cfg-length" min="1" step="1">
+        </label>
+      </div>
+      <button id="btn-cfg-save" class="secondary">保存布料参数</button>
+    </section>
+
+    <section>
+      <h2>瑕疵区</h2>
+      <ul id="defect-list" class="item-list"></ul>
+      <details>
+        <summary>+ 添加矩形瑕疵区</summary>
+        <div class="grid2">
+          <label>X (mm)<input type="number" id="def-x" step="1" value="0"></label>
+          <label>Y (mm)<input type="number" id="def-y" step="1" value="0"></label>
+          <label>宽 (mm)<input type="number" id="def-w" min="1" step="1" value="100"></label>
+          <label>高 (mm)<input type="number" id="def-h" min="1" step="1" value="100"></label>
+        </div>
+        <button id="btn-def-add" class="secondary">添加</button>
+      </details>
+    </section>
+
+    <section>
+      <h2>裁片清单</h2>
+      <ul id="piece-list" class="item-list"></ul>
+      <details id="piece-editor">
+        <summary id="piece-editor-title">+ 添加裁片</summary>
+        <label>名称<input type="text" id="pc-name" placeholder="如：前片"></label>
+        <label>多边形顶点（每行一个 <code>x,y</code>，整数毫米，按顺序）
+          <textarea id="pc-polygon" rows="6" placeholder="0,0&#10;600,0&#10;600,800&#10;0,800"></textarea>
+        </label>
+        <div class="grid2">
+          <label>件数<input type="number" id="pc-qty" min="1" max="999" step="1" value="1"></label>
+          <label class="checkbox"><input type="checkbox" id="pc-rot"> 允许旋转 180°</label>
+        </div>
+        <div class="btn-row">
+          <button id="btn-pc-save" class="secondary">保存裁片</button>
+          <button id="btn-pc-cancel" class="ghost" hidden>取消编辑</button>
+        </div>
+      </details>
+    </section>
+
+    <section class="actions">
+      <button id="btn-optimize" class="primary">▶ 重新优化排样</button>
+      <p class="hint">锁定裁片与瑕疵区保持不动，仅重新排布未锁定裁片。</p>
+    </section>
+
+    <section id="msg-box" hidden></section>
+  </aside>
+
+  <!-- 右侧画布 -->
+  <section id="canvas-wrap">
+    <div id="canvas-toolbar">
+      <button id="btn-zoom-out" class="ghost">－</button>
+      <span id="zoom-label">100%</span>
+      <button id="btn-zoom-in" class="ghost">＋</button>
+      <button id="btn-fit" class="ghost">适应宽度</button>
+      <span class="sep"></span>
+      <span class="legend"><i class="sw piece"></i>裁片</span>
+      <span class="legend"><i class="sw locked"></i>已锁定</span>
+      <span class="legend"><i class="sw defect"></i>瑕疵区</span>
+      <span class="legend"><i class="sw used"></i>占用长度</span>
+      <span id="selected-info" class="selected-info"></span>
+    </div>
+    <div id="canvas-scroll">
+      <canvas id="canvas"></canvas>
+    </div>
+    <div id="selection-bar" hidden>
+      <span id="sel-desc"></span>
+      <button id="btn-rotate" class="secondary" hidden>旋转 180°</button>
+      <button id="btn-lock" class="secondary"></button>
+      <label>X<input type="number" id="sel-x" step="1" style="width:90px"></label>
+      <label>Y<input type="number" id="sel-y" step="1" style="width:90px"></label>
+      <button id="btn-move-apply" class="secondary">移动</button>
+      <span class="hint">也可直接在画布上拖动未锁定裁片</span>
+    </div>
+  </section>
+</main>
+
+<script src="app.js"></script>
+</body>
+</html>
